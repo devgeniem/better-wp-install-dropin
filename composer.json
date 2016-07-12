@@ -18,8 +18,5 @@
   "require": {
     "php": ">=5.6",
     "koodimonni/composer-dropin-installer": "^1.0"
-  },
-  "suggest": {
-    "oscarotero/env": "^1.0"
   }
 }
