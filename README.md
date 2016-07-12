@@ -4,6 +4,8 @@
 
 This `install.php` dropin doesn't install bloat from default install.php and sets a few opionated wp options.
 
+It doesn't send you email after installing new WordPress either.
+
 ## Installation
 You can copy `install.php` to your `wp-content` folder. Just plug&play.
 
