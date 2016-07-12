@@ -1,0 +1,25 @@
+{
+  "name": "devgeniem/better-wp-install-dropin",
+  "type": "wordpress-dropin",
+  "license": "GPL-3.0+",
+  "description": "Better WordPress installer.php dropin.",
+  "homepage": "https://github.com/devgeniem/better-wp-installer-dropin",
+  "authors": [
+    {
+      "name": "Onni Hakala",
+      "email": "onni.hakala@geniem.com",
+      "homepage": "https://github.com/onnimonni",
+      "role": "Developer"
+    }
+  ],
+  "keywords": [
+    "wordpress","wp","installer","dropin","clean"
+  ],
+  "require": {
+    "php": ">=5.6",
+    "koodimonni/composer-dropin-installer": "^1.0"
+  },
+  "suggest": {
+    "oscarotero/env": "^1.0"
+  }
+}
