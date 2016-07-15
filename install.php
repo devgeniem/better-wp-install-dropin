@@ -40,10 +40,13 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
   populate_options();
   populate_roles();
 
+  // Use language from installer or env WPLANG or default to 'fi'.
   if ( $language ) {
     update_option( 'WPLANG', $language );
-  } elseif ( env( 'WPLANG' ) ) {
-    update_option( 'WPLANG', env( 'WPLANG' ) );
+  } elseif ( ! empty( getenv( 'WPLANG' ) ) ) {
+    update_option( 'WPLANG', getenv( 'WPLANG' ) );
+  } else {
+    update_option( 'WPLANG', 'fi' );
   }
 
   update_option( 'blogname', $blog_title );
