@@ -17,6 +17,6 @@
   ],
   "require": {
     "php": ">=7.0",
-    "koodimonni/composer-dropin-installer": "^1.0"
+    "koodimonni/composer-dropin-installer": ">=1.0.1"
   }
 }
