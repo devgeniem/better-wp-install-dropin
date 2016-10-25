@@ -6,6 +6,13 @@ This `install.php` dropin doesn't install bloat from default install.php and set
 
 It doesn't send you email after installing new WordPress either.
 
+## Current options
+- Set empty page as Front page
+- Don't use any widgets
+- Use empty blog description ( if someone forgots to change that )
+- Use `/%category%/%postname%/` permalink
+- Don't install any articles
+
 ## Installation
 You can copy `install.php` to your `wp-content` folder. Just plug&play.
 
