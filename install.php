@@ -41,7 +41,7 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
   populate_roles();
 
   // Use language from installer or env WPLANG or default to 'fi'.
-  if ( $language ) {
+  if ( ! empty( $language ) ) {
     update_option( 'WPLANG', $language );
   } elseif ( ! empty( getenv( 'WPLANG' ) ) ) {
     update_option( 'WPLANG', getenv( 'WPLANG' ) );
