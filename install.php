@@ -163,11 +163,11 @@ function wp_install_defaults( int $user_id ) {
   update_option( 'uploads_use_yearmonth_folders', 1 );
 
   /**
-   * Permalink custom structure: /%postname%
+   * Permalink custom structure: /%category%/%postname%
    *
    * @see wp-admin/options-permalink.php
    */
-  update_option( 'permalink_structure', '/%postname%/' );
+  update_option( 'permalink_structure', '/%category%/%postname%/' );
 
   /**
    * Create Default category.
