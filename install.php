@@ -193,6 +193,22 @@ function wp_install_defaults( int $user_id ) {
   $wpdb->insert( $wpdb->term_taxonomy, array( 'term_id' => $cat_id, 'taxonomy' => 'category', 'description' => '', 'parent' => 0, 'count' => 1 ) );
   $cat_tt_id = $wpdb->insert_id;
 
+  /**
+   * Create new page and add it as front page
+   */
+  $id = wp_insert_post( array(
+    // Somehow translations won't work always. So check if Finnish was used.
+    'post_title' => ( get_option('WPLANG') == 'fi' ) ? 'Etusivu' : __('Front page'),
+    'post_type' => 'page',
+    'post_status' => 'publish',
+    // Prefer empty content if someone forgots to change it.
+    'post_content' => ''
+  ) );
+
+  // Add page we just created as front page
+  update_option( 'page_on_front' , $id );
+  update_option( 'show_on_front' , 'page' );
+
   if ( is_multisite() ) {
     // Flush rules to pick up the new page.
     $wp_rewrite->init();
