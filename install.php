@@ -172,11 +172,11 @@ function wp_install_defaults( int $user_id ) {
   /**
    * Create Default category.
    */
+  // Somehow translations won't work always. So check if Finnish was used.
+  $cat_name = ( get_option('WPLANG') == 'fi' ) ? 'Yleinen' : __('Uncategorized');
 
-  $cat_name = __('Uncategorized');
   /* translators: Default category slug */
-
-  $cat_slug = sanitize_title( _x('Uncategorized', 'Default category slug') );
+  $cat_slug = sanitize_title( ( get_option('WPLANG') == 'fi' ) ? 'yleinen' : _x('Uncategorized', 'Default category slug') );
 
   if ( global_terms_enabled() ) {
     $cat_id = $wpdb->get_var( $wpdb->prepare( "SELECT cat_ID FROM {$wpdb->sitecategories} WHERE category_nicename = %s", $cat_slug ) );
