@@ -130,6 +130,13 @@ function wp_install_defaults( int $user_id ) {
   update_option( 'timezone_string', ( ! empty( getenv( 'TZ' ) ) ? getenv( 'TZ' ) : 'Europe/Helsinki' ) );
 
   /**
+   * We don't want any default widgets. This fixes 'Undefined index: wp_inactive_widgets'
+   *
+   * @see wp-includes/widgets.php:1208
+   */
+  update_option( 'sidebars_widgets', array( 'wp_inactive_widgets' => array() ) );
+
+  /**
    * Before a comment appears a comment must be manually approved: true
    *
    * @see wp-admin/options-discussion.php
