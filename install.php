@@ -234,3 +234,4 @@ function wp_install_defaults( int $user_id ) {
    */
   update_user_meta( $user_id, 'show_welcome_panel', 0 );
 }
+
