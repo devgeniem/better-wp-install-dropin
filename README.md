@@ -32,3 +32,8 @@ OR you can use composer so that you can automatically update it too. Put these i
 
 ## License
 GPLv3
+
+## Maintainers
+[@onnimonni](https://github.com/onnimonni)
+
+[@Nomafin](https://github.com/Nomafin)
