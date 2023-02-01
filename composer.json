@@ -1,10 +1,21 @@
 {
-  "name": "devgeniem/better-wp-install-dropin",
+  "name": "figuren-theater/install.php",
+  "description": "WordPress installer-dropin for the figuren.theater Multisite network.",
+  "homepage": "https://websites.fuer.figuren.theater",
   "type": "wordpress-dropin",
-  "license": "GPL-3.0+",
-  "description": "Better WordPress installer.php dropin.",
-  "homepage": "https://github.com/devgeniem/better-wp-installer-dropin",
+  "keywords": ["wordpress","wp","installer","dropin"],
+  "license": "GPL-3.0-or-later",
   "authors": [
+    {
+        "name": "figuren.theater",
+        "email": "info@figuren.theater"
+    },
+    {
+        "name": "Carsten Bach",
+        "email": "mail@carsten-bach.de",
+        "homepage": "https://carsten-bach.de",
+        "role": "Developer"
+    },
     {
       "name": "Onni Hakala",
       "email": "onni.hakala@geniem.com",
@@ -12,9 +23,11 @@
       "role": "Developer"
     }
   ],
-  "keywords": [
-    "wordpress","wp","installer","dropin","clean"
-  ],
+  "support": {
+      "email": "info@figuren.theater",
+      "issues": "https://github.com/figuren-theater/install.php/issues",
+      "source": "https://github.com/figuren-theater/install.php"
+  },
   "require": {
     "php": ">=7.0",
     "koodimonni/composer-dropin-installer": ">=1.0.1"
