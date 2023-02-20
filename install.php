@@ -1,10 +1,18 @@
 <?php
 /**
- * 
+ * This install.php dropin doesn't install bloat 
+ * from default install.php and sets only a few wp options.
+ *
+ * @package   figuren-theater\install.php
+ * @author    figuren.theater
+ * @copyright 2023 figuren.theater
+ * @license   GPL-3.0-or-later
+ * @source    https://github.com/figuren-theater/install.php
+ * @version   1.1.0
  */
 
 add_action( 'ft_install_defaults', 'ft_install_defaults__set_https_urls' );
-add_action( 'ft_install_defaults', 'ft_install_defaults__category' );
+// add_action( 'ft_install_defaults', 'ft_install_defaults__category' );
 add_action( 'ft_install_defaults', 'ft_install_defaults__post' );
 
 /**
@@ -30,12 +38,20 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
 		_deprecated_argument( __FUNCTION__, '2.6' );
 	}
 
+	$install_defaults = [
+		'blogname'    => $blog_title,
+		'admin_email' => $user_email,
+		'blog_public' => $public,
+		// Freshness of site - in the future, this could get more specific about actions taken, perhaps.
+		'fresh_site'  => 1,
+	];
+
 	wp_check_mysql_version();
 	wp_cache_flush();
 	make_db_current_silent();
-	populate_options();
+	populate_options( $install_defaults );
 	populate_roles();
-
+/*
 	update_option( 'blogname', $blog_title );
 	update_option( 'admin_email', $user_email );
 	update_option( 'blog_public', $public );
@@ -62,7 +78,7 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
 	if ( ! $public ) {
 		update_option( 'default_pingback_flag', 0 );
 	}
-
+*/
 	/*
 	* Create default user. If the user already exists, the user tables are
 	* being shared among blogs. Just set the role in that case.
@@ -142,7 +158,7 @@ function wp_install_defaults( int $user_id ) {
 	*
 	* @see wp-admin/options-general.php
 	*/
-	update_option( 'timezone_string', ( ! empty( getenv( 'TZ' ) ) ? getenv( 'TZ' ) : 'Europe/Berlin' ) );
+	// update_option( 'timezone_string', ( ! empty( getenv( 'TZ' ) ) ? getenv( 'TZ' ) : 'Europe/Berlin' ) ); // handled by 'Feature__decisions_not_options'
 
 	/**
 	* We don't want any default widgets. This fixes 'Undefined index: wp_inactive_widgets'
@@ -156,33 +172,34 @@ function wp_install_defaults( int $user_id ) {
 	*
 	* @see wp-admin/options-discussion.php
 	*/
-	update_option( 'comment_moderation', 1 );
+	// update_option( 'comment_moderation', 1 ); // handled by 'Feature__decisions_not_options'
 
 	/** Before a comment appears the comment author must have a previously approved comment: false */
 	update_option( 'comment_whitelist', 0 );
 
 	/** Allow people to post comments on new articles (this setting may be overridden for individual articles): false */
-	update_option( 'default_comment_status', 0 );
+	// update_option( 'default_comment_status', 0 ); // handled by 'Feature__decisions_not_options'
 
 	/** Allow link notifications from other blogs: false */
-	update_option( 'default_ping_status', 0 );
+	// update_option( 'default_ping_status', 0 ); // handled by 'Feature__decisions_not_options'
 
 	/** Attempt to notify any blogs linked to from the article: false */
-	update_option( 'default_pingback_flag', 0 );
+	// update_option( 'default_pingback_flag', 0 ); // handled by 'Feature__decisions_not_options'
 
 	/**
 	* Organize my uploads into month- and year-based folders: true
 	*
 	* @see wp-admin/options-media.php
 	*/
-	update_option( 'uploads_use_yearmonth_folders', 1 );
+	// update_option( 'uploads_use_yearmonth_folders', 1 ); // handled by 'Feature__decisions_not_options'
 
 	/**
 	* Permalink custom structure: /%category%/%postname%
 	*
 	* @see wp-admin/options-permalink.php
 	*/
-	update_option( 'permalink_structure', '/%category%/%year%/%monthnum%/%postname%/' );
+	// update_option( 'permalink_structure', '/%category%/%year%/%monthnum%/%postname%/' ); // handled by 'Feature__decisions_not_options'
+	
 //////
 //  //
 //////
@@ -252,13 +269,17 @@ function wp_new_blog_notification( $blog_title, $blog_url, $user_id, $password )
 
 
 function ft_install_defaults__post( int $user_id ) : void {
+	global $wpdb;
+
+	//
+	$cat_tt_id = ft_install_defaults__category( $user_id );
 	
 	// First post.
 	$now             = current_time( 'mysql' );
 	$now_gmt         = current_time( 'mysql', 1 );
 	$first_post_guid = get_option( 'home' ) . '/?p=1';
 
-	$first_post = get_site_option( 'first_post' );
+	$first_post      = get_site_option( 'first_post' );
 
 	if ( ! $first_post ) {
 		$first_post = "<!-- wp:paragraph -->\n<p>" .
@@ -312,7 +333,9 @@ function ft_install_defaults__post( int $user_id ) : void {
 }
 
 
-function ft_install_defaults__category( int $user_id ) : void {
+function ft_install_defaults__category( int $user_id ) : int {
+	global $wpdb;
+
 	/**
 	* Create Default category.
 	*/
@@ -342,6 +365,8 @@ function ft_install_defaults__category( int $user_id ) : void {
 		)
 	);
 	$cat_tt_id = $wpdb->insert_id;
+
+	return $cat_tt_id;
 }
 
 
