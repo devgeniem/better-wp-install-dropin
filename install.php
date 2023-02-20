@@ -1,6 +1,14 @@
 <?php
 /**
- * 
+ * This install.php dropin doesn't install bloat 
+ * from default install.php and sets only a few wp options.
+ *
+ * @package   figuren-theater\install.php
+ * @author    figuren.theater
+ * @copyright 2023 figuren.theater
+ * @license   GPL-3.0-or-later
+ * @source    https://github.com/figuren-theater/install.php
+ * @version   1.0.0
  */
 
 add_action( 'ft_install_defaults', 'ft_install_defaults__set_https_urls' );
