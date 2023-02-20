@@ -8,7 +8,7 @@
  * @copyright 2023 figuren.theater
  * @license   GPL-3.0-or-later
  * @source    https://github.com/figuren-theater/install.php
- * @version   1.0.0
+ * @version   1.1.0
  */
 
 add_action( 'ft_install_defaults', 'ft_install_defaults__set_https_urls' );
