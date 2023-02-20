@@ -4,7 +4,7 @@
  */
 
 add_action( 'ft_install_defaults', 'ft_install_defaults__set_https_urls' );
-add_action( 'ft_install_defaults', 'ft_install_defaults__category' );
+// add_action( 'ft_install_defaults', 'ft_install_defaults__category' );
 add_action( 'ft_install_defaults', 'ft_install_defaults__post' );
 
 /**
@@ -261,13 +261,17 @@ function wp_new_blog_notification( $blog_title, $blog_url, $user_id, $password )
 
 
 function ft_install_defaults__post( int $user_id ) : void {
+	global $wpdb;
+
+	//
+	$cat_tt_id = ft_install_defaults__category( $user_id );
 	
 	// First post.
 	$now             = current_time( 'mysql' );
 	$now_gmt         = current_time( 'mysql', 1 );
 	$first_post_guid = get_option( 'home' ) . '/?p=1';
 
-	$first_post = get_site_option( 'first_post' );
+	$first_post      = get_site_option( 'first_post' );
 
 	if ( ! $first_post ) {
 		$first_post = "<!-- wp:paragraph -->\n<p>" .
@@ -321,7 +325,9 @@ function ft_install_defaults__post( int $user_id ) : void {
 }
 
 
-function ft_install_defaults__category( int $user_id ) : void {
+function ft_install_defaults__category( int $user_id ) : int {
+	global $wpdb;
+
 	/**
 	* Create Default category.
 	*/
@@ -351,6 +357,8 @@ function ft_install_defaults__category( int $user_id ) : void {
 		)
 	);
 	$cat_tt_id = $wpdb->insert_id;
+
+	return $cat_tt_id;
 }
 
 
