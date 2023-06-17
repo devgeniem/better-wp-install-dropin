@@ -1,0 +1,10 @@
+name: Issue gardening for figuren.theater
+
+on:
+  issues:
+    types:
+      - opened
+jobs:
+  call-workflow-ft-issue-gardening:
+    uses: figuren-theater/.github/.github/workflows/issue-gardening.yml@main
+    secrets: inherit
