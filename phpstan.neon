@@ -1,0 +1,15 @@
+#$ vendor/bin/phpstan analyze
+
+parameters:
+    level: max
+    inferPrivatePropertyTypeFromConstructor: true
+    paths:
+        - inc/
+        - plugin.php
+    excludePaths:
+        analyse:
+            - vendor/
+            - tests/
+    ignoreErrors:
+		# Find a nicer way instead of ignoring this Error on every ft-module
+        - '#Function Altis\\register_module not found\.#'
