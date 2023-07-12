@@ -1,20 +1,24 @@
 {
   "name": "figuren-theater/install.php",
   "description": "WordPress installer-dropin for the figuren.theater Multisite network.",
-  "homepage": "https://websites.fuer.figuren.theater",
-  "type": "wordpress-dropin",
-  "keywords": ["wordpress","wp","installer","dropin"],
   "license": "GPL-3.0-or-later",
+  "type": "wordpress-dropin",
+  "keywords": [
+    "wordpress",
+    "wp",
+    "installer",
+    "dropin"
+  ],
   "authors": [
     {
-        "name": "figuren.theater",
-        "email": "info@figuren.theater"
+      "name": "figuren.theater",
+      "email": "info@figuren.theater"
     },
     {
-        "name": "Carsten Bach",
-        "email": "mail@carsten-bach.de",
-        "homepage": "https://carsten-bach.de",
-        "role": "Developer"
+      "name": "Carsten Bach",
+      "email": "mail@carsten-bach.de",
+      "homepage": "https://carsten-bach.de",
+      "role": "Developer"
     },
     {
       "name": "Onni Hakala",
@@ -23,13 +27,25 @@
       "role": "Developer"
     }
   ],
+  "homepage": "https://websites.fuer.figuren.theater",
   "support": {
-      "email": "info@figuren.theater",
-      "issues": "https://github.com/figuren-theater/install.php/issues",
-      "source": "https://github.com/figuren-theater/install.php"
+    "email": "info@figuren.theater",
+    "issues": "https://github.com/figuren-theater/install.php/issues",
+    "source": "https://github.com/figuren-theater/install.php"
   },
   "require": {
     "php": ">=7.0",
     "koodimonni/composer-dropin-installer": ">=1.0.1"
+  },
+  "require-dev": {
+    "figuren-theater/code-quality": "^0.5.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "koodimonni/composer-dropin-installer": true,
+      "phpstan/extension-installer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "ergebnis/composer-normalize": true
+    }
   }
 }
