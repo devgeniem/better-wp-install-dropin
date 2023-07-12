@@ -1,0 +1,12 @@
+name: Draft or update the next release
+
+on:
+  push:
+    # branches to consider in the event; optional, defaults to all
+    branches:
+      - main
+
+jobs:
+  call-workflow-release-drafter:
+    uses: figuren-theater/.github/.github/workflows/release-drafter.yml@main
+    secrets: inherit

@@ -1,0 +1,17 @@
+version: 2
+updates:
+
+  - package-ecosystem: "composer"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Increase the version requirements for Composer
+    # only when required
+    versioning-strategy: increase-if-necessary
+    # All explicitly defined dependencies.
+    allow:
+      - dependency-type: "direct"
+    open-pull-requests-limit: 10
+
+# maybe interesting later
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#composer-repository

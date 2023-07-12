@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<ruleset name="install.php">
+	<description>Coding standards for install.php</description>
+	<!--
+	<file>.</file> -->
+
+	<!--
+	<exclude-pattern>*/bin/*</exclude-pattern>
+	<exclude-pattern>*/tests/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	-->
+
+	<!-- Use figuren.theater Coding Standards -->
+	<rule ref="figurentheater" />
+
+	<!-- Allow functions without namespace -->
+	<rule ref="HM.Functions.NamespacedFunctions">
+		<exclude name="HM.Functions.NamespacedFunctions.MissingNamespace" />
+	</rule>
+
+	<!-- Allow i18n without text-domain -->
+	<rule ref="WordPress.WP.I18n">
+		<exclude name="WordPress.WP.I18n.MissingArgDomain" />
+	</rule>
+
+	<!-- Allow side-effects -->
+	<rule ref="PSR1.Files.SideEffects">
+		<exclude name="PSR1.Files.SideEffects.FoundWithSymbols" />
+	</rule>
+
+	<!-- Allow direct DB interaction -->
+	<rule ref="WordPress.DB.DirectDatabaseQuery">
+		<exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery" />
+		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching" />
+	</rule>
+
+	<!-- Allow the usage of users/usermeta -->
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions">
+		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.user_meta_update_user_meta" />
+	</rule>
+	<rule ref="WordPressVIPMinimum.Variables.RestrictedVariables">
+		<exclude name="WordPressVIPMinimum.Variables.RestrictedVariables.user_meta__wpdb__usermeta" />
+	</rule>
+
+
+</ruleset>

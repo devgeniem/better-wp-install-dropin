@@ -1,0 +1,11 @@
+#$ vendor/bin/phpstan analyze
+
+parameters:
+    level: max
+    inferPrivatePropertyTypeFromConstructor: true
+    paths:
+        - install.php
+    excludePaths:
+        analyse:
+            - vendor/
+    # ignoreErrors:
