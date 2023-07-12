@@ -1,0 +1,12 @@
+/build/
+/node_modules
+/vendor
+*.sql
+*.tar.gz
+*.zip
+/wiki
+.vscode
+
+# misc
+.DS_Store
+Thumbs.db
