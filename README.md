@@ -58,7 +58,7 @@ OR you can use composer so that you can automatically update it too. Put these i
 
 ## License
 
-This project is licensed under the [GPL-3.0-or-later](LICENSE.md), see the [LICENSE](LICENSE) file for
+This project is licensed under the **GPL-3.0-or-later**, see the [LICENSE](LICENSE) file for
 details
 
 ## Acknowledgments to the original maintainers
