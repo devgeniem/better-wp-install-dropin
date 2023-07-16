@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <ruleset name="install.php">
 	<description>Coding standards for install.php</description>
-	<!--
-	<file>.</file> -->
+
+	<file>.</file>
 
 	<!--
 	<exclude-pattern>*/bin/*</exclude-pattern>
