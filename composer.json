@@ -38,7 +38,7 @@
     "koodimonni/composer-dropin-installer": ">=1.0.1"
   },
   "require-dev": {
-    "figuren-theater/code-quality": "^0.5.0"
+    "figuren-theater/code-quality": "*"
   },
   "config": {
     "allow-plugins": {
