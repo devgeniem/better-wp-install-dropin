@@ -1,0 +1,12 @@
+name: 'pre-Release Changelog Update'
+
+on:
+  workflow_call:
+  release:
+    types: [prereleased]
+
+jobs:
+  call-workflow-update-changelog:
+    uses: figuren-theater/.github/.github/workflows/prerelease-changelog-update.yml@main
+    secrets: inherit
+

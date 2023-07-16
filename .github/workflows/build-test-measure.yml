@@ -1,0 +1,13 @@
+name: Build, test & measure
+
+on:
+  workflow_call:
+  pull_request:
+  push:
+    branches:
+      ['main']
+
+jobs:
+  call-workflow-build-test-measure:
+    uses: figuren-theater/code-quality/.github/workflows/build-test-measure.yml@main
+    secrets: inherit
