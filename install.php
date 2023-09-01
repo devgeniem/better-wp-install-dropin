@@ -176,7 +176,7 @@ function wp_install_defaults( int $user_id ) :void {
 		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE user_id != %d AND meta_key = %s", $user_id, $table_prefix . 'capabilities' ) );
 
 		// Delete any caps that snuck into the previously active blog. (Hardcoded to blog 1 for now.)
-		// TODO: Get previous_blog_id.
+		// TODO: ??? Get previous_blog_id.
 	if ( ! is_super_admin( $user_id ) && 1 !== $user_id ) {
 		$wpdb->delete(
 			$wpdb->usermeta,
