@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased](https://github.com/figuren-theater/install.php/compare/1.3.1...HEAD)
+## [Unreleased](https://github.com/figuren-theater/install.php/compare/1.3.2...HEAD)
+
+## [1.3.2](https://github.com/figuren-theater/install.php/compare/1.3.1...1.3.2) - 2023-09-14
+
+### 🐛 Fixed
+
+- Use the latest version of code-quality tools & make sure phpcs can be run by gh actions ([#8](https://github.com/figuren-theater/install.php/pull/8))
 
 ## [1.3.1](https://github.com/figuren-theater/install.php/compare/1.3.0...1.3.1) - 2023-07-16
 
