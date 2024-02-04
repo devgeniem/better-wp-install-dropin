@@ -37,7 +37,7 @@ add_action( 'ft_install_defaults', 'ft_install_defaults__post' );
  *    password_message: string
  * }
  */
-function wp_install( string $blog_title, string $user_name, string $user_email, bool $public, string $deprecated = '', string $user_password = '', string $language = '' ) :array {
+function wp_install( string $blog_title, string $user_name, string $user_email, bool $public, string $deprecated = '', string $user_password = '', string $language = '' ): array {
 
 	if ( ! empty( $deprecated ) ) {
 		_deprecated_argument( __FUNCTION__, '2.6' );
@@ -64,9 +64,9 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
 	* Create default user. If the user already exists, the user tables are
 	* being shared among blogs. Just set the role in that case.
 	*/
-	$user_id        = username_exists( $user_name );
-	$user_password  = trim( $user_password );
-	$user_created   = false;
+	$user_id       = username_exists( $user_name );
+	$user_password = trim( $user_password );
+	$user_created  = false;
 
 	if ( ! $user_id && empty( $user_password ) ) {
 		$user_password = wp_generate_password( 12, false );
@@ -78,8 +78,8 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
 		}
 	} elseif ( ! $user_id ) {
 		// Password has been provided.
-		$message      = '<em>' . __( 'Your chosen password.' ) . '</em>';
-		$user_id      = wp_create_user( $user_name, $user_password, $user_email );
+		$message = '<em>' . __( 'Your chosen password.' ) . '</em>';
+		$user_id = wp_create_user( $user_name, $user_password, $user_email );
 		if ( ! is_wp_error( $user_id ) ) {
 			$user_created = true;
 		}
@@ -139,7 +139,7 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
  *
  * @return void
  */
-function wp_install_defaults( int $user_id ) :void {
+function wp_install_defaults( int $user_id ): void {
 	global $wpdb, $wp_rewrite, $table_prefix;
 
 	/**
@@ -196,7 +196,7 @@ function wp_install_defaults( int $user_id ) :void {
  *
  * @return void
  */
-function ft_install_defaults__post( int $user_id ) : void {
+function ft_install_defaults__post( int $user_id ): void {
 	global $wpdb;
 
 	$cat_tt_id = ft_install_defaults__category( $user_id );
@@ -262,7 +262,6 @@ function ft_install_defaults__post( int $user_id ) : void {
 			'object_id'        => 1,
 		]
 	);
-
 }
 
 /**
@@ -272,7 +271,7 @@ function ft_install_defaults__post( int $user_id ) : void {
  *
  * @return integer
  */
-function ft_install_defaults__category( int $user_id ) : int {
+function ft_install_defaults__category( int $user_id ): int {
 	global $wpdb;
 
 	$cat_name = __( 'Uncategorized' );
@@ -313,25 +312,24 @@ function ft_install_defaults__category( int $user_id ) : int {
  *
  * @see      https://github.com/WordPress/WordPress/blob/ba9dd1d7d7dd84eabef6962e07e50e83763f1e8b/wp-includes/ms-site.php#L696
  *
- * @subpackage Figuren_Theater\Network\Setup
- * @version    2022-10-05
- * @author     Carsten Bach
- *
  * @return void
  */
-function ft_install_defaults__set_https_urls() :void {
+function ft_install_defaults__set_https_urls(): void {
 	$_options_to_change = [
 		'home',
 		'siteurl',
 	];
-	array_map(function( $option ) {
-		// Cast to string - Brutus style.
-		$_opt = '' . get_option( $option );
-		$_updated_option = str_replace( 'http://', 'https://', $_opt );
+	array_map(
+		function ( $option ) {
+			// Cast to string - Brutus style.
+			$_opt            = '' . get_option( $option );
+			$_updated_option = str_replace( 'http://', 'https://', $_opt );
 
-		update_option(
-			$option,
-			$_updated_option
-		);
-	}, $_options_to_change);
+			update_option(
+				$option,
+				$_updated_option
+			);
+		},
+		$_options_to_change
+	);
 }
