@@ -25,10 +25,9 @@ add_action( 'ft_install_defaults', 'ft_install_defaults__post' );
  * @param string $blog_title    Blog title.
  * @param string $user_name     User's username.
  * @param string $user_email    User's email.
- * @param bool   $public        Whether blog is public.
+ * @param bool   $blog_public        Whether blog is public.
  * @param string $deprecated    Optional. Not used.
  * @param string $user_password Optional. User's chosen password. Default empty (random password).
- * @param string $language      Optional. Language chosen. Default empty.
  *
  * @return array{
  *    url: string,
@@ -37,7 +36,7 @@ add_action( 'ft_install_defaults', 'ft_install_defaults__post' );
  *    password_message: string
  * }
  */
-function wp_install( string $blog_title, string $user_name, string $user_email, bool $public, string $deprecated = '', string $user_password = '', string $language = '' ): array {
+function wp_install( string $blog_title, string $user_name, string $user_email, bool $blog_public, string $deprecated = '', string $user_password = '' ): array {
 
 	if ( ! empty( $deprecated ) ) {
 		_deprecated_argument( __FUNCTION__, '2.6' );
@@ -46,7 +45,7 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
 	$install_defaults = [
 		'blogname'    => $blog_title,
 		'admin_email' => $user_email,
-		'blog_public' => $public,
+		'blog_public' => $blog_public,
 		// Freshness of site - in the future, this could get more specific about actions taken, perhaps.
 		'fresh_site'  => 1,
 	];
@@ -70,7 +69,7 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
 
 	if ( ! $user_id && empty( $user_password ) ) {
 		$user_password = wp_generate_password( 12, false );
-		$message       = __( '<strong><em>Note that password</em></strong> carefully! It is a <em>random</em> password that was generated just for you.' );
+		$message       = __( '<strong><em>Note that password</em></strong> carefully! It is a <em>random</em> password that was generated just for you.', 'default' );
 		$user_id       = wp_create_user( $user_name, $user_password, $user_email );
 		if ( ! is_wp_error( $user_id ) ) {
 			update_user_meta( $user_id, 'default_password_nag', true );
@@ -78,13 +77,13 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
 		}
 	} elseif ( ! $user_id ) {
 		// Password has been provided.
-		$message = '<em>' . __( 'Your chosen password.' ) . '</em>';
+		$message = '<em>' . __( 'Your chosen password.', 'default' ) . '</em>';
 		$user_id = wp_create_user( $user_name, $user_password, $user_email );
 		if ( ! is_wp_error( $user_id ) ) {
 			$user_created = true;
 		}
 	} else {
-		$message = __( 'User already exists. Password inherited.' );
+		$message = __( 'User already exists. Password inherited.', 'default' );
 	}
 
 	// Make sure we do not deal with a WP_Error.
@@ -116,7 +115,7 @@ function wp_install( string $blog_title, string $user_name, string $user_email, 
 	*
 	* @param WP_User $user The site owner.
 	*/
-	do_action( 'wp_install', $user );
+	do_action( 'wp_install', $user ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 	return [
 		'url'              => $guessurl,
@@ -150,7 +149,8 @@ function wp_install_defaults( int $user_id ): void {
 	update_option( 'sidebars_widgets', [ 'wp_inactive_widgets' => [] ] );
 
 	/** Before a comment appears the comment author must have a previously approved comment: false */
-	update_option( 'comment_whitelist', 0 );
+	/** The parameter value 'comment_whitelist' has been deprecated since WordPress version 5.5.0. Use 'comment_previously_approved' instead. */
+	update_option( 'comment_previously_approved', 0 );
 
 	/**
 	 * Run our custom install steps
@@ -199,7 +199,7 @@ function wp_install_defaults( int $user_id ): void {
 function ft_install_defaults__post( int $user_id ): void {
 	global $wpdb;
 
-	$cat_tt_id = ft_install_defaults__category( $user_id );
+	$cat_tt_id = ft_install_defaults__category();
 
 	$now             = current_time( 'mysql' );
 	$now_gmt         = current_time( 'mysql', 1 );
@@ -212,10 +212,10 @@ function ft_install_defaults__post( int $user_id ): void {
 	}
 
 	if ( ! $first_post ) {
-		$first_post = "<!-- wp:paragraph -->\n<p>" .
+		$first_post = "<!-- wp:paragraph -->\n<p>"
 		/* translators: First post content. %s: Site link. */
-		__( 'Welcome to %s. This is your first post. Edit or delete it, then start writing!' ) .
-		"</p>\n<!-- /wp:paragraph -->";
+		. __( 'Welcome to %s. This is your first post. Edit or delete it, then start writing!', 'default' )
+		. "</p>\n<!-- /wp:paragraph -->";
 	}
 
 	// Cast to string - Brutus style.
@@ -238,9 +238,10 @@ function ft_install_defaults__post( int $user_id ): void {
 			'post_date_gmt'         => $now_gmt,
 			'post_content'          => $first_post,
 			'post_excerpt'          => '',
-			'post_title'            => __( 'Hallo Theaterwelt!' ),
-			/* translators: Default post slug. */
-			'post_name'             => sanitize_title( _x( 'Hallo Theaterwelt', 'Default post slug' ) ),
+			/* translators: Default first-post title. */
+			'post_title'            => _x( 'Hallo Theaterwelt', 'Default first-post title', 'figurentheater' ),
+			/* translators: Default first-post slug. */
+			'post_name'             => sanitize_title( _x( 'Hallo Theaterwelt', 'Default first-post slug', 'figurentheater' ) ),
 			'post_modified'         => $now,
 			'post_modified_gmt'     => $now_gmt,
 			'guid'                  => $first_post_guid,
@@ -267,16 +268,15 @@ function ft_install_defaults__post( int $user_id ): void {
 /**
  * Create Default category.
  *
- * @param integer $user_id The user who creates the term.
- *
  * @return integer
  */
-function ft_install_defaults__category( int $user_id ): int {
+function ft_install_defaults__category(): int {
 	global $wpdb;
 
-	$cat_name = __( 'Uncategorized' );
+	/* translators: Default category title. */
+	$cat_name = _x( 'Uncategorized', 'Default category title', 'default' );
 	/* translators: Default category slug. */
-	$cat_slug = sanitize_title( _x( 'Uncategorized', 'Default category slug' ) );
+	$cat_slug = sanitize_title( _x( 'Uncategorized', 'Default category slug', 'default' ) );
 
 	$cat_id = 1;
 
@@ -324,11 +324,7 @@ function ft_install_defaults__set_https_urls(): void {
 			// Cast to string - Brutus style.
 			$_opt            = '' . get_option( $option );
 			$_updated_option = str_replace( 'http://', 'https://', $_opt );
-
-			update_option(
-				$option,
-				$_updated_option
-			);
+			update_option( $option, $_updated_option );
 		},
 		$_options_to_change
 	);

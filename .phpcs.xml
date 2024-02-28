@@ -3,6 +3,7 @@
 	<description>Coding standards for install.php</description>
 
 	<file>.</file>
+	<arg name="basepath" value="./"/><!-- Strip the file paths down to the relevant bit -->
 
 	<!--
 	<exclude-pattern>*/bin/*</exclude-pattern>
@@ -13,15 +14,15 @@
 	<!-- Use figuren.theater Coding Standards -->
 	<rule ref="figurentheater" />
 
-	<!-- Allow functions without namespace -->
+	<!-- Allow functions without namespace
 	<rule ref="HM.Functions.NamespacedFunctions">
 		<exclude name="HM.Functions.NamespacedFunctions.MissingNamespace" />
-	</rule>
+	</rule> -->
 
-	<!-- Allow i18n without text-domain -->
+	<!-- Allow i18n without text-domain
 	<rule ref="WordPress.WP.I18n">
 		<exclude name="WordPress.WP.I18n.MissingArgDomain" />
-	</rule>
+	</rule> -->
 
 	<!-- Allow side-effects -->
 	<rule ref="PSR1.Files.SideEffects">
